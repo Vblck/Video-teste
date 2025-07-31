@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Player com Chromecast</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    video {
+      width: 100%;
+      max-width: 800px;
+      margin: 20px auto;
+      display: block;
+    }
+
+    #cast-button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Reprodutor com Suporte a Chromecast</h1>
+
+  <video id="video" controls>
+    <source src="video.mp4" type="video/mp4">
+    Seu navegador não suporta vídeos.
+  </video>
+
+  <!-- Botão de Cast do Google -->
+  <google-cast-launcher id="cast-button" style="height: 48px; width: 48px;"></google-cast-launcher>
+
+  <script>
+    window['__onGCastApiAvailable'] = function(isAvailable) {
+      if (isAvailable) {
+        initializeCastApi();
+      }
+    };
+
+    function initializeCastApi() {
+      cast.framework.CastContext.getInstance().setOptions({
+        receiverApplicationId: chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID,
+        autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+      });
+    }
+  </script>
+
+</body>
+</html>
